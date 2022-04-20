@@ -1,4 +1,3 @@
-// swiftlint:disable all
 class SinglelineFormatter: PrettyFormatter {
     private let theme: ColorTheme
 
@@ -19,8 +18,7 @@ class SinglelineFormatter: PrettyFormatter {
         let labelValuePairs: [String] = elements.map { label, value in
             if let label = label {
                 return label + ": " + value
-            }
-            else {
+            } else {
                 return value
             }
         }

@@ -30,7 +30,6 @@
 //
 // ----------------------------------------------------------------------------
 
-// swiftlint:disable all
 public let p: (String) -> P = { label in P(label: label) }
 public let pp: (String) -> PP = { label in PP(label: label) }
 public let pd: (String) -> PD = { label in PD(label: label) }

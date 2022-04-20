@@ -1,5 +1,5 @@
 import Foundation
-// swiftlint:disable all
+
 enum PrettyDescriberError: Error {
     case notSupported(target: Any)
     case failedExtractKeyValue(dictionary: Any)

@@ -1,8 +1,8 @@
 #if canImport(Foundation)
 
 import Foundation
-// swiftlint:disable all
-final class LogOutputStream: TextOutputStream {
+
+public final class LogOutputStream: TextOutputStream {
     private let url: URL
     
     init(url: URL) {
@@ -11,14 +11,13 @@ final class LogOutputStream: TextOutputStream {
         if !FileManager().fileExists(atPath: directoryPath.absoluteString) {
             do {
                 try FileManager().createDirectory(at: directoryPath, withIntermediateDirectories: true)
-            }
-            catch {
+            } catch {
                 print("[SwiftPrettyPrint] Failed to create directory. (\(directoryPath))")
             }
         }
     }
     
-    func write(_ string: String) {
+    public func write(_ string: String) {
         guard let output = OutputStream(url: url, append: true) else { return }
         
         output.open()

@@ -6,7 +6,7 @@
 // Copyright (c) 2020 Yusuke Hosonuma.
 //
 
-extension Debug {
+public extension Debug {
     struct Option {
         var prefix: String?
         var indentSize: Int

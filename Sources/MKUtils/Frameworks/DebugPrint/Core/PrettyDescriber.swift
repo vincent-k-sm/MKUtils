@@ -1,6 +1,5 @@
 import Foundation
 
-// swiftlint:disable all
 struct PrettyDescriber {
     var formatter: PrettyFormatter
     var theme: ColorTheme = .plain
@@ -20,12 +19,10 @@ struct PrettyDescriber {
                 if let value = mirror.children.first?.value {
                     if debug {
                         return theme.type("Optional") + "(" + _string(value) + ")"
-                    }
-                    else {
+                    } else {
                         return _string(value)
                     }
-                }
-                else {
+                } else {
                     return theme.nil("nil")
                 }
 
@@ -48,8 +45,7 @@ struct PrettyDescriber {
                     // Specifing "." as the first charactor of the label of tuple is prohibited.
                     if let nonNilLabel = $0.label, nonNilLabel.first != "." {
                         label = nonNilLabel
-                    }
-                    else { label = nil }
+                    } else { label = nil }
 
                     return (label: label, value: _string($0.value))
                 }
@@ -66,8 +62,7 @@ struct PrettyDescriber {
 
                 if debug {
                     return theme.type("Set") + "(" + content + ")"
-                }
-                else {
+                } else {
                     return content
                 }
 
@@ -140,8 +135,7 @@ struct PrettyDescriber {
         case let url as URL:
             if debug {
                 return theme.type("URL") + #"("\#(theme.url(url.absoluteString))")"#
-            }
-            else {
+            } else {
                 return theme.url(url.absoluteString)
             }
 
@@ -151,8 +145,7 @@ struct PrettyDescriber {
                 f.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZZ"
                 f.timeZone = timeZone
                 return theme.type("Date") + #"("\#(f.string(from: date))")"#
-            }
-            else {
+            } else {
                 let f = DateFormatter()
                 f.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 f.timeZone = timeZone
@@ -164,7 +157,6 @@ struct PrettyDescriber {
 
         case is Int: fallthrough
         case is Float: fallthrough
-
         case is Double:
             return theme.number("\(target)")
 
@@ -180,8 +172,7 @@ struct PrettyDescriber {
                 default:
                     return nil
                 }
-            }
-            else {
+            } else {
                 switch target {
                 case let value as CustomStringConvertible:
                     return value.description
@@ -203,12 +194,10 @@ struct PrettyDescriber {
 		if mirror.children.isEmpty {
             if debug {
                 return "\(typeName).\(target)"
-            }
-            else {
+            } else {
                 return ".\(target)"
             }
-        }
-        else {
+        } else {
             guard let index = "\(target)".firstIndex(of: "(") else {
                 throw PrettyDescriberError.unknownError(target: target)
             }
@@ -218,8 +207,7 @@ struct PrettyDescriber {
             let prefix: String
             if debug {
                 prefix = "\(typeName).\(valueName)"
-            }
-            else {
+            } else {
                 prefix = ".\(valueName)"
             }
 
@@ -246,8 +234,7 @@ struct PrettyDescriber {
     private func handleError(_ f: () throws -> String) -> String {
         do {
             return try f()
-        }
-        catch {
+        } catch {
             dumpError(error: error)
             return "\(error)"
         }

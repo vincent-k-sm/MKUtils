@@ -9,13 +9,13 @@
 // Namespace
 public enum CombineOperatorOption {}
 
-public extension CombineOperatorOption {
-    enum Format {
+extension CombineOperatorOption {
+    public enum Format {
         case singleline
         case multiline
     }
 
-    enum Event: CaseIterable {
+    public enum Event: CaseIterable {
         case subscription
         case output
         case completion

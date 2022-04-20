@@ -1,4 +1,3 @@
-// swiftlint:disable all
 class MultilineFormatter: PrettyFormatter {
     private let indentSize: Int
     private let theme: ColorTheme
@@ -36,8 +35,7 @@ class MultilineFormatter: PrettyFormatter {
         let lines: [String] = elements.map { label, value in
             if let label = label {
                 return "\(label): \(value)"
-            }
-            else {
+            } else {
                 return value
             }
         }
@@ -73,8 +71,7 @@ class MultilineFormatter: PrettyFormatter {
     ) -> String {
         if fields.count == 1, let field = fields.first {
             return theme.type(typeName) + "(" + "\(field.0): \(field.1)" + ")"
-        }
-        else {
+        } else {
             let body = fields
                 .map { label, value in "\(label): \(value)" }
                 .joined(separator: ",\n")
