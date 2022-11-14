@@ -6,76 +6,49 @@
 import UIKit
 
 public extension UIButton {
-    func alignTextBelow(spacing: CGFloat = 2.0) {
+    func setBackgroundColor(
+        _ color: UIColor,
+        for state: UIControl.State
+    ) {
+        UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
         
-        let insetAmount = spacing / 2
-        // background color가 사라짐
-//        if #available(iOS 15.0, *) {
-//
-//            var configuration = UIButton.Configuration.filled()
-//            configuration.baseBackgroundColor = .clear
-//            configuration.imagePadding = spacing
-//            configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: insetAmount, bottom: 0, trailing: insetAmount)
-//
-//            self.configuration = configuration
-//
-//        }
-//        else {
-//            let isRTL = UIView.userInterfaceLayoutDirection(for: semanticContentAttribute) == .rightToLeft
-//            if isRTL {
-//               imageEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
-//               titleEdgeInsets = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
-//               contentEdgeInsets = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: -insetAmount)
-//            } else {
-               imageEdgeInsets = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
-               titleEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
-               contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
-//            }
-//        }
+        let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
-    }
-}
-
-public struct ButtonSizeModel {
-    var height: CGFloat
-    
-}
-
-public enum CustomButtonSize: CaseIterable {
-    case medium
-    case small
-    
-    var style: ButtonSizeModel {
-        switch self {
-            case .medium:
-                let model = ButtonSizeModel(height: 48.0)
-                return model
-
-            case .small:
-                let model = ButtonSizeModel(height: 44.0)
-                return model
-                
-        }
+        self.setBackgroundImage(backgroundImage, for: state)
     }
 }
 
 public extension UIButton {
-    
-    func setTitle(text: String,
-                  color: UIColor,
-                  state: [UIControl.State] = [.normal, .highlighted, .disabled],
-                  alpha: CGFloat = 1.0) {
+    func alignTextBelow(_ value: CGFloat) {
+
+        let spacing: CGFloat = -(value) / 2
+
+        self.imageEdgeInsets = UIEdgeInsets(
+            top: 0,
+            left: spacing,
+            bottom: 0,
+            right: -spacing
+        )
         
-        for i in state {
-            let attributeString = NSMutableAttributedString(string: text)
-            var attr: [NSAttributedString.Key: Any] = [:]
-            attr[.font] = UIFont.systemFont(ofSize: 16.0, weight: .bold)
-            attr[.foregroundColor] = color
-            attributeString.addAttributes(attr, range: NSRange(location: 0, length: attributeString.length))
-            self.setAttributedTitle(attributeString, for: i)
-            
-        }
+        self.titleEdgeInsets = UIEdgeInsets(
+            top: 0,
+            left: -spacing,
+            bottom: 0,
+            right: spacing
+        )
+        
+        self.contentEdgeInsets = UIEdgeInsets(
+            top: 0,
+            left: spacing,
+            bottom: 0,
+            right: spacing
+        )
     }
 }
+
 #endif
 

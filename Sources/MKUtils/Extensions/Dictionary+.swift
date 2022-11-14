@@ -27,12 +27,6 @@ public extension Dictionary {
     }
 }
 
-public extension Dictionary where Key == String, Value == Any? {
-    func filterNil() -> [String: Any]? {
-        let filteredNil = self.filter({ $0.value != nil }).mapValues({ $0! })
-        return (!filteredNil.isEmpty) ? filteredNil : nil
-    }
-}
 
 public extension Dictionary where Key == String, Value: Any {
     func toJsonString() -> String? {
@@ -41,14 +35,6 @@ public extension Dictionary where Key == String, Value: Any {
         }
         else {
             return nil
-        }
-    }
-}
-
-public extension Dictionary {
-    mutating func merge(_ dictionary: [Key: Value]) {
-        for (key, value) in dictionary {
-            self[key] = value
         }
     }
 }

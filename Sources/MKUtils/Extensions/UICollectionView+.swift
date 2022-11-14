@@ -67,14 +67,7 @@ public extension UICollectionView {
 }
 
 public extension UICollectionView {
-    /// Extensions shouldn't override declarations
-//    open override func touchesShouldCancel(in view: UIView) -> Bool {
-//        if view is UIButton {
-//            return true
-//        }
-//        return super.touchesShouldCancel(in: view)
-//    }
-    
+        
     func removeEventDelay() {
         self.delaysContentTouches = false
         self.canCancelContentTouches = true
