@@ -1,3 +1,10 @@
+//
+//  PrettyDescriberError.swift
+//  
+//
+//  Created by vincent on 2023/02/06.
+//
+
 import Foundation
 
 enum PrettyDescriberError: Error {
