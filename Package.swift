@@ -26,7 +26,11 @@ let package = Package(
             name: "MKUtils",
             dependencies: [
 //                .product(name: "MKFoundation", package: "MKFoundation")
-            ]),
+            ],
+            exclude: [
+                "../../Resources"
+            ]
+        ),
         .testTarget(
             name: "MKUtilsTests",
             dependencies: ["MKUtils"]),
