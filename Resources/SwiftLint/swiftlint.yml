@@ -1,0 +1,184 @@
+#https://realm.github.io/SwiftLint/index.html
+excluded:
+    - Carthage
+    - fastlane
+    - Pods
+    - support
+    - Build-Phases
+    - ./Resources
+    - ./Support
+    - ${SRCROOT}/${PROJECT_NAME}/*/AppDelegate.swift
+    - ${SRCROOT}/${PROJECT_NAME}/*/SceneDelegate.swift
+    
+included:
+
+disabled_rules:
+    - redundant_string_enum_value
+    - number_separator
+    - line_length      
+    - identifier_name
+    - force_cast
+    - force_try
+    - file_length
+    - function_body_length
+    - nimble_operator
+    - type_body_length
+    - vertical_parameter_alignment
+    - unused_setter_value
+    - orphaned_doc_comment
+    - implicit_getter
+    - large_tuple
+    - type_name
+    - cyclomatic_complexity
+    - function_parameter_count
+    - no_fallthrough_only 
+    - private_outlet
+    - trailing_whitespace
+    - first_where
+    - unused_optional_binding
+    - unneeded_parentheses_in_closure_argument
+    - unavailable_function
+    - empty_xctest_method
+    - redundant_optional_initialization
+    - switch_case_alignment
+    - redundant_type_annotation
+    - array_init
+    - shorthand_operator
+    - object_literal
+    - for_where
+    - closure_parameter_position
+    - untyped_error_in_catch
+
+analyzer_rules:
+    - unused_import
+
+# number_separator:
+#    minimum_length: 7
+
+# force_cast: warning
+
+opt_in_rules:
+# auto-correct 참고용
+    - closure_end_indentation
+    - sorted_imports
+    - explicit_init
+    - weak_delegate
+    - trailing_newline
+    - vertical_whitespace_between_cases
+    - closure_spacing
+    - empty_enum_arguments
+    - literal_expression_end_indentation
+    - return_arrow_whitespace
+
+# else
+    - required_deinit
+    - anyobject_protocol
+#    - attributes
+    - collection_alignment
+    - contains_over_first_not_nil    
+    - empty_string
+    - empty_xctest_method
+    - fallthrough
+    - fatal_error_message        
+    - first_where
+    - identical_operands
+    - joined_default_parameter
+    - let_var_whitespace
+    - lower_acl_than_parent
+    - nimble_operator
+#    - number_separator
+    - object_literal
+    - overridden_super_call
+    - override_in_extension
+    - pattern_matching_keywords
+    - private_action
+    - private_outlet    
+    - prohibited_super_call    
+    - quick_discouraged_focused_test
+    - redundant_nil_coalescing
+    - single_test_class
+    - sorted_first_last
+    - static_operator
+    - unavailable_function
+    - unneeded_parentheses_in_closure_argument
+    - untyped_error_in_catch
+    - vertical_parameter_alignment_on_call
+    - yoda_condition
+    - extension_access_modifier
+    - unused_optional_binding
+    - multiple_closures_with_trailing_closure
+    - redundant_discardable_let
+    - closing_brace
+    - unowned_variable_capture
+
+colon:
+  apply_to_dictionaries: true
+
+nesting:
+    type_level: 4
+
+indentation: 2
+
+statement_position:
+  statement_mode: uncuddled_else
+
+custom_rules:
+    double_space: # from https://github.com/IBM-Swift/Package-Builder
+      include: "*.swift"
+      name: "Double space"
+      regex: '([a-z,A-Z] \s+)'
+      message: "Double space between keywords"
+      match_kinds: keyword
+      severity: warning
+
+    comments_space: # from https://github.com/brandenr/swiftlintconfig
+      name: "Space After Comment"
+      regex: '(^ *//\w+)'
+      message: "There should be a space after //"
+      severity: warning
+
+    no_direct_standard_out_logs:
+      name: "Writing log messages directly to standard out is disallowed"
+      regex: "( \\bprint|\\bdebugPrint|\\bdump|Swift\\.print|Swift\\.debugPrint|Swift\\.dump)\\s*\\("
+      match_kinds:
+      - identifier
+      message: "Use `Debug.print()` Don't commit `print(…)`, `debugPrint(…)`, or `dump(…)` as they write to standard out in release.Use Debug.print(...) Either log to a dedicated logging system or silence this warning in debug-only scenarios explicitly using `// swiftlint:disable:next no_direct_standard_out_logs`"
+      severity: warning
+
+    already_true:
+      regex: "== true"
+      message: "Don't compare to true, just use the bool value."
+
+    already_bool:
+      regex: "== false"
+      message: "Don't compare to false, just use !value."
+
+    commented_code:
+      regex: '(?&lt;!:|\/)\/\/\h*[a-z.](?!wiftlint)'
+      message: "Comment starting with lowercase letter - did you forget to delete old code?"
+
+    # multiline_commented_code:
+    #   regex: '^\s*[a-z]'
+    #   match_kinds: comment
+    #   message: "Comment starting with lowercase letter - did you forget to delete old code?"
+
+    # empty_line_after_guard: # from https://github.com/brandenr/swiftlintconfig
+    #   name: "Empty Line After Guard"
+    #   regex: '(^ *guard[ a-zA-Z0-9=?.\(\),><!]*\{[ a-zA-Z0-9=?.\(\),><!]*\}\n *(?!(?:return|guard))\S+)'
+    #   message: "There should be an empty line after a guard"
+    #   severity: warning
+
+    # unnecessary_type: # from https://github.com/brandenr/swiftlintconfig
+    #   name: "Unnecessary Type"
+    #   regex: '[ a-zA-Z0-9]*(?:let|var) [ a-zA-Z0-9]*: ([a-zA-Z0-9]*)[ ]*= \1'
+    #   message: "Type Definition Not Needed"
+    #   severity: warning
+
+    auto_generated_leftovers:
+      # regex: 'override func [^\n]*\{\n(\s*super\.[^\n]*\n(\s*\/\/[^\n]*\n)*|(\s*\/\/[^\n]*\n)+)\s*\}'
+      regex: 'func [^\n]*\{\n(\s*)\}'
+      message: "Delete auto-generated functions that you don't use"
+
+
+
+

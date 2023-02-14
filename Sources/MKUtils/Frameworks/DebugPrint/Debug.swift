@@ -25,6 +25,7 @@ public class Debug {
 // MARK: Standard API
 public extension Debug {
     static func print(
+        module: String? = nil,
         _ targets: Any...,
         separator: String = "\n",
         option: DebugOption = Debug.options,
@@ -46,6 +47,12 @@ public extension Debug {
         var logTitle: String = ""
         if let prefix = option.prefix {
             logTitle = "[\(prefix)] "
+        }
+        
+        if let module = module {
+            logTitle += logTitle.isEmpty
+            ? "[\(module)]"
+            : " [\(module)]"
         }
        
         var isDeinitPrint: Bool = false
@@ -69,7 +76,7 @@ public extension Debug {
         Swift.print(titleString)
         
         if !isDeinitPrint {
-            _output(printer: _printDebug, label: nil, targets, separator: separator, option: option)
+            _output(printer: _printDebug, targets, separator: separator, option: option)
         }
         
     }
@@ -79,7 +86,6 @@ public extension Debug {
 
 extension Debug {
     private static func _printDebug(
-        label: String?,
         _ targets: [Any],
         separator: String,
         option: DebugOption,
@@ -90,16 +96,15 @@ extension Debug {
         }.joined(separator: separator)
     }
     
-    private typealias Printer = (String?, [Any], String, DebugOption, Bool) -> String
+    private typealias Printer = ([Any], String, DebugOption, Bool) -> String
     
     private static func _output(
         printer: Printer,
-        label: String?,
         _ targets: [Any],
         separator: String,
         option: DebugOption
     ) {
-        let plain = printer(label, targets, separator, option, false)
+        let plain = printer(targets, separator, option, false)
         Swift.print(plain)
     }
     
