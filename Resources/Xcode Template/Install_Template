@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+XCODE_USER_TEMPLATES_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+TEMPLATES_DIR="Clean Swift"
+
+
+xcodeTemplate () {
+	echo "==> Copying up Clean Swift Xcode file templates..."
+
+	mkdir -p "$XCODE_USER_TEMPLATES_DIR"
+	echo "==> mkdir File Templates"
+
+	rm -fR "$XCODE_USER_TEMPLATES_DIR/$TEMPLATES_DIR"
+	echo "==> remove Legacy Template"
+	
+	cp -fR "$SCRIPT_DIR/$TEMPLATES_DIR" "$XCODE_USER_TEMPLATES_DIR"
+	echo "==> Copy new Template"
+}
+
+xcodeTemplate
+
+echo "==> ... success!"

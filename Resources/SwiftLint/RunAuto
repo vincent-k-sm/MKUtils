@@ -1,0 +1,11 @@
+#!/bin/bash
+
+targetAutofile="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/SwiftLint/swiftlint.auto.yml"
+export PATH="$PATH:/opt/homebrew/bin"
+
+if which swiftlint > /dev/null; then
+ swiftlint --fix --config $targetAutofile
+else
+  echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+fi
+
