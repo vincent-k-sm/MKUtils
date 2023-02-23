@@ -1,23 +1,8 @@
 import Foundation
 
 public extension Date {
-    func string(withFormat format: String = "dd/MM/yyyy HH:mm") -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        dateFormatter.locale = Locale(identifier: "ko_kr")
-        return dateFormatter.string(from: self)
-    }
-
     func adding(_ component: Calendar.Component, value: Int) -> Date {
         return calendar.date(byAdding: component, value: value, to: self)!
-    }
-    
-    func when(dateString: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "yyyy-MM-dd"
-        let date = formatter.date(from: dateString)
-        return date
     }
 }
 
@@ -26,7 +11,7 @@ public extension Date {
         return Calendar(identifier: Calendar.current.identifier) // Workaround to segfault on corelibs foundation https://bugs.swift.org/browse/SR-10147
     }
 
-    /// SwifterSwift: Era.
+    /// Era.
     ///
     ///        Date().era -> 1
     ///
@@ -35,7 +20,7 @@ public extension Date {
     }
 
     #if !os(Linux)
-    /// SwifterSwift: Quarter.
+    /// Quarter.
     ///
     ///        Date().quarter -> 3 // date in third quarter of the year.
     ///
@@ -47,7 +32,7 @@ public extension Date {
     }
     #endif
 
-    /// SwifterSwift: Week of year.
+    /// Week of year.
     ///
     ///        Date().weekOfYear -> 2 // second week in the year.
     ///
@@ -55,7 +40,7 @@ public extension Date {
         return calendar.component(.weekOfYear, from: self)
     }
 
-    /// SwifterSwift: Week of month.
+    /// Week of month.
     ///
     ///        Date().weekOfMonth -> 3 // date is in third week of the month.
     ///
@@ -63,7 +48,7 @@ public extension Date {
         return calendar.component(.weekOfMonth, from: self)
     }
 
-    /// SwifterSwift: Year.
+    /// Year.
     ///
     ///        Date().year -> 2017
     ///
@@ -84,7 +69,7 @@ public extension Date {
         }
     }
 
-    /// SwifterSwift: Month.
+    /// Month.
     ///
     ///     Date().month -> 1
     ///
@@ -107,7 +92,7 @@ public extension Date {
         }
     }
 
-    /// SwifterSwift: Day.
+    /// Day.
     ///
     ///     Date().day -> 12
     ///
@@ -130,21 +115,21 @@ public extension Date {
         }
     }
 
-    /// SwifterSwift: Weekday.
+    /// Weekday.
     ///
     ///     Date().weekday -> 5 // fifth day in the current week.
     ///
     var weekday: Int {
         return calendar.component(.weekday, from: self)
     }
-    /// SwifterSwift: Weekday.
+    /// Weekday.
     ///
     ///     Date().weekOfMonthNumber -> 5
     ///
     var weekOfMonthNumber: Int {
         return Calendar.current.component(.weekOfMonth, from: self)
     }
-    /// SwifterSwift: Weekday.
+    /// Weekday.
     ///
     ///     Date().weekOfYearNumber -> 5
     ///
@@ -152,7 +137,7 @@ public extension Date {
         return Calendar.current.component(.weekOfYear, from: self)
     }
 
-    /// SwifterSwift: Hour.
+    /// Hour.
     ///
     ///     Date().hour -> 17 // 5 pm
     ///
@@ -175,7 +160,7 @@ public extension Date {
         }
     }
 
-    /// SwifterSwift: Minutes.
+    /// Minutes.
     ///
     ///     Date().minute -> 39
     ///
@@ -198,7 +183,7 @@ public extension Date {
         }
     }
 
-    /// SwifterSwift: Seconds.
+    /// Seconds.
     ///
     ///     Date().second -> 55
     ///
@@ -221,7 +206,7 @@ public extension Date {
         }
     }
 
-    /// SwifterSwift: Nanoseconds.
+    /// Nanoseconds.
     ///
     ///     Date().nanosecond -> 981379985
     ///
@@ -250,7 +235,7 @@ public extension Date {
         }
     }
 
-    /// SwifterSwift: Milliseconds.
+    /// Milliseconds.
     ///
     ///     Date().millisecond -> 68
     ///
@@ -277,7 +262,7 @@ public extension Date {
         }
     }
 
-    /// SwifterSwift: Check if date is in future.
+    /// Check if date is in future.
     ///
     ///     Date(timeInterval: 100, since: Date()).isInFuture -> true
     ///
@@ -285,7 +270,7 @@ public extension Date {
         return self > Date()
     }
 
-    /// SwifterSwift: Check if date is in past.
+    /// Check if date is in past.
     ///
     ///     Date(timeInterval: -100, since: Date()).isInPast -> true
     ///
@@ -293,7 +278,7 @@ public extension Date {
         return self < Date()
     }
 
-    /// SwifterSwift: Check if date is within today.
+    /// Check if date is within today.
     ///
     ///     Date().isInToday -> true
     ///
@@ -301,7 +286,7 @@ public extension Date {
         return calendar.isDateInToday(self)
     }
 
-    /// SwifterSwift: Check if date is within yesterday.
+    /// Check if date is within yesterday.
     ///
     ///     Date().isInYesterday -> false
     ///
@@ -309,7 +294,7 @@ public extension Date {
         return calendar.isDateInYesterday(self)
     }
 
-    /// SwifterSwift: Check if date is within tomorrow.
+    /// Check if date is within tomorrow.
     ///
     ///     Date().isInTomorrow -> false
     ///
@@ -317,27 +302,27 @@ public extension Date {
         return calendar.isDateInTomorrow(self)
     }
 
-    /// SwifterSwift: Check if date is within a weekend period.
+    /// Check if date is within a weekend period.
     var isInWeekend: Bool {
         return calendar.isDateInWeekend(self)
     }
 
-    /// SwifterSwift: Check if date is within a weekday period.
+    /// Check if date is within a weekday period.
     var isWorkday: Bool {
         return !calendar.isDateInWeekend(self)
     }
 
-    /// SwifterSwift: Check if date is within the current week.
+    /// Check if date is within the current week.
     var isInCurrentWeek: Bool {
         return calendar.isDate(self, equalTo: Date(), toGranularity: .weekOfYear)
     }
 
-    /// SwifterSwift: Check if date is within the current month.
+    /// Check if date is within the current month.
     var isInCurrentMonth: Bool {
         return calendar.isDate(self, equalTo: Date(), toGranularity: .month)
     }
 
-    /// SwifterSwift: Check if date is within the current year.
+    /// Check if date is within the current year.
     var isInCurrentYear: Bool {
         return calendar.isDate(self, equalTo: Date(), toGranularity: .year)
     }
@@ -391,10 +376,6 @@ public extension Date {
     var isInThisYear: Bool { isInSameYear(as: Date()) }
     var isInThisMonth: Bool { isInSameMonth(as: Date()) }
     var isInThisWeek: Bool { isInSameWeek(as: Date()) }
-
-//    var isInYesterday: Bool { Calendar.current.isDateInYesterday(self) }
-//    var isInToday:     Bool { Calendar.current.isDateInToday(self) }
-//    var isInTomorrow:  Bool { Calendar.current.isDateInTomorrow(self) }
 
     var isInTheFuture: Bool { self > Date() }
     var isInThePast: Bool { self < Date() }
@@ -504,57 +485,55 @@ public extension Date {
             self = date
         }
     }
-    
-    var iso8601String: String {
-        // https://github.com/justinmakaila/NSDate-ISO-8601/blob/master/NSDateISO8601.swift
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+}
 
+public extension Date {
+    func toString(
+        locale: Locale = Locale.current, // Locale(identifier: "en_US_POSIX") ko_kr
+        timeZone: TimeZone? = TimeZone.current, // TimeZone(abbreviation: "GMT") KST
+        format: String = "yyyy/MM/dd HH:mm:ss"
+    ) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = locale
+        dateFormatter.timeZone = timeZone
+        return dateFormatter.string(from: self)
+    }
+    
+    func iso8601String(
+        locale: Locale = Locale.current, // Locale(identifier: "en_US_POSIX") ko_kr
+        timeZone: TimeZone? = TimeZone.current // TimeZone(abbreviation: "GMT") KST
+    ) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = locale
+        dateFormatter.timeZone = timeZone
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS" // iso8601
+        
         return dateFormatter.string(from: self).appending("Z")
     }
-
-    init?(iso8601String: String) {
+    
+    init?(
+        dateString: String,
+        locale: Locale = Locale.current, // Locale(identifier: "en_US_POSIX") ko_kr
+        timeZone: TimeZone? = TimeZone.current, // TimeZone(abbreviation: "GMT") KST
+        dateFormat: String? = nil
+    ) {
         // https://github.com/justinmakaila/NSDate-ISO-8601/blob/master/NSDateISO8601.swift
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-//        dateFormatter.locale = Locale(identifier: "ko_kr")
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        if let date = dateFormatter.date(from: iso8601String) {
-            self = date
+        dateFormatter.locale = locale
+        dateFormatter.timeZone = timeZone
+        if let dateFormat = dateFormat {
+            dateFormatter.dateFormat = dateFormat
         }
         else {
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssX"
-            guard let date = dateFormatter.date(from: iso8601String) else { return nil }
-            self = date
-
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"  // iso8601
         }
-
-    }
-    
-    init?(date: String, format: String = "yyyy-MM-dd HH:mm:ss") {
-        let formatter = DateFormatter()
-
-        formatter.locale = Locale(identifier: "ko_kr")
-        formatter.timeZone = TimeZone(abbreviation: "KST")
-        formatter.dateFormat = format
-
-        guard let date: Date = formatter.date(from: date) else { return nil }
         
+        guard let date = dateFormatter.date(from: dateString) else { return nil }
         self = date
     }
     
-    var dateStringKR: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "ko")
-        let dateInFormat = dateFormatter.string(from: self)
-        return dateInFormat
-    }
 }
-
 /**
  10000.asString(style: .positional)  // 2:46:40
  10000.asString(style: .abbreviated) // 2h 46m 40s
@@ -564,14 +543,18 @@ public extension Date {
  10000.asString(style: .brief)       // 2hr 46min 40sec
  */
 public extension Double {
-    func toTimeFormat(style: DateComponentsFormatter.UnitsStyle) -> String {
+    func toTimeFormat(
+        locale: Locale = Locale.current, // Locale(identifier: "en_US_POSIX") ko_kr
+        style: DateComponentsFormatter.UnitsStyle,
+        allowedUnits: NSCalendar.Unit = [.hour, .minute] // .second, .nanosecond
+    ) -> String {
         
         var calendar = Calendar.current
-        calendar.locale = Locale(identifier: "ko")
+        calendar.locale = locale
 //        calendar.timeZone = TimeZone(abbreviation: "KST")
         let formatter = DateComponentsFormatter()
         formatter.calendar = calendar
-        formatter.allowedUnits = [.hour, .minute]// , .second, .nanosecond]
+        formatter.allowedUnits = allowedUnits
         formatter.unitsStyle = style
         return formatter.string(from: self) ?? ""
     }
@@ -610,26 +593,9 @@ public extension String {
         return Double((hours * 60 * 60) + (minutes * 60))
     }
     
-//    var timeToDouble: Double {
-//        let format = "yyyy-MM-dd HH:mm"
-//        let dateFormatterGet = DateFormatter()
-//        dateFormatterGet.dateFormat = format
-//
-//
-//        let fullDate = Date().string(withFormat: "yyy-MM-dd") + " " + self
-//        let date: Date? = dateFormatterGet.date(from: fullDate)
-//        return date?.timeIntervalSince1970 ?? 0.0
-//    }
-
 }
 
 public extension Date {
-//    mutating func addDays(n: Int)
-//    {
-//        let cal = Calendar.current
-//        self = cal.date(byAdding: .day, value: n, to: self)!
-//    }
-
     var startOfDay: Date {
         return Calendar.current.startOfDay(for: self)
     }
@@ -663,6 +629,7 @@ public extension Date {
         return days
     }
 }
+
 public extension Date {
     func localDate() -> Date {
         let nowUTC = self
