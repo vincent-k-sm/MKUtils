@@ -1,10 +1,19 @@
 #!/bin/bash
 
 targetAutofile="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/SwiftLint/swiftlint.auto.yml"
+copyAutofile="${SRCROOT}/swiftlint.auto.yml"
+cp $targetAutofile $copyAutofile
+
 export PATH="$PATH:/opt/homebrew/bin"
 
 if which swiftlint > /dev/null; then
- swiftlint --fix --config $targetAutofile
+ swiftlint --fix --config $copyAutofile
+ # Remove File after auto Linting
+ rm $copyAutofile
+ 
+ # Run Script after auto lint
+ ${BUILD_DIR%/Build/*}/SourcePackages/checkouts/ios_dkt_utils/Resources/SwiftLint/Run
+
 else
   echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
 fi

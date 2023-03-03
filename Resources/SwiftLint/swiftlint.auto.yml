@@ -9,6 +9,10 @@ excluded:
     - ./Support
     - ${SRCROOT}/${PROJECT_NAME}/*/AppDelegate.swift
     - ${SRCROOT}/${PROJECT_NAME}/*/SceneDelegate.swift
+    - ${SRCROOT}/Pods
+    - ${SRCROOT}/fastlane
+    - ${SRCROOT}/support
+    - ${SRCROOT}/${PROJECT_NAME}/Resources
     
 disabled_rules:
     - redundant_string_enum_value
