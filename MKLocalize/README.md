@@ -22,7 +22,7 @@ MKLocalize.shared.setCurrentLanguage("en")
 
 
 # Codegen I18N
-## New Run Script Phase에 아래 코드를 작성합니다
+## (Auto) New Run Script Phase에 아래 코드를 작성합니다
 ```
 # Type a script or drag a script file from your workspace to insert its path.
 
@@ -45,3 +45,11 @@ fi
 
 ```
 
+
+## (Manual) 수동으로 스크립트를 실행합니다
+### 매 빌드 시 자동 적용하는 경우 과도한 버퍼가 사용될 수 있습니다
+### New Run Script Phase에 아래 코드를 작성합니다
+```
+SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/MKLocalize"
+"${SCRIPT_DIR}/ManualScript"
+```

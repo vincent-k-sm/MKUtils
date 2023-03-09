@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
+#
+# cd "${SRCROOT}"
+# touch Run
+# #SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#
+# # <-p> 패키지 파일의 Root 폴더 위치를 설정하세요
+# # <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. PhotoScene NoteScene)
+#
+# cd "$SCRIPT_DIR"
+# xcrun -sdk macosx swift run Localizing generate \
+# -p "${SCRIPT_DIR}/Sources" \
+# -t "Example"
+
+# -p "${SRCROOT}/Packages" \
+# -t ""
+
+#rm -rf "$SCRIPT_DIR/.build"
+
+#!/bin/bash
+# For Script Test
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "${SCRIPT_DIR}"
+SRCROOT="${SCRIPT_DIR}"
+
+#cd "${SRCROOT}"
+#SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
+
+if [ -f RunI18N ];
+then
+echo "RunI18N File Is Already Exist\nRemove it initialize"
+else
+cat > RunI18N << EOF
+#!/bin/bash
+SCRIPT_DIR="${SCRIPT_DIR}"
+cd "${SCRIPT_DIR}"
+
+# <-p> 패키지 파일의 Root 폴더 위치를 설정하세요
+# <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. PhotoScene NoteScene)
+xcrun -sdk macosx swift run Localizing generate \\
+-p "${SRCROOT}/Packages" \\
+-t ""
+
+rm -rf "$SCRIPT_DIR/.build" # 미 삭제시 바이너리에 빌드파일이 포함됩니다 삭제하지마세요
+
+EOF
+chmod +x RunI18N # Make the script executable
+open -a Xcode RunI18N
+fi
