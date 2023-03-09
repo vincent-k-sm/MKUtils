@@ -269,7 +269,7 @@ struct PrettyDescriber {
         ---------------------------------------------------------
         \(error.localizedDescription)
         Please report issue from below:
-        https://github.kakaocorp.com/Techin/ios_dkt_utils
+        https://github.com/vincent-k-sm/MKUtils
         ---------------------------------------------------------
         
         """
