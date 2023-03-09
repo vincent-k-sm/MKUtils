@@ -11,6 +11,9 @@ let package = Package(
         .library(
             name: "MKUtils",
             targets: ["MKUtils"]),
+        .library(
+            name: "MKLocalize",
+            targets: ["MKLocalize"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -33,6 +36,14 @@ let package = Package(
         ),
         .testTarget(
             name: "MKUtilsTests",
-            dependencies: ["MKUtils"]),
+            dependencies: ["MKUtils"]
+        ),
+        .target(
+            name: "MKLocalize",
+            dependencies: [
+                "MKUtils"
+            ],
+            path: "MKLocalize/Sources"
+        ),
     ]
 )
