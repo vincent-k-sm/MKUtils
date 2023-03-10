@@ -22,26 +22,55 @@ MKLocalize.shared.setCurrentLanguage("en")
 
 
 # Codegen I18N
-## New Run Script Phase에 아래 코드를 작성합니다
+
+## For Main Project
+### New Run Script Phase에 아래 코드를 작성합니다
+ ```
+touch tempI18N.swift
+echo "struct I18N {" >> tempI18N.swift
+file="${SRCROOT}/Resource/ko.lproj/Localizable.strings" # Localizable.strings 파일 위치로 고쳐주세요.
+while IFS= read -r line
+do
+variableName=$(echo ${line%%=*})
+if [ "$variableName" != "" ]
+then
+echo "    static let $variableName = \"$variableName\".localized" >> tempI18N.swift
+fi
+done <"$file"
+
+echo "}" >> tempI18N.swift
+
+cat "tempI18N.swift" > ${SRCROOT}/Resource/I18N.swift # Output 파일 위치로 고쳐주세요.
+rm tempI18N.swift
+```
+
+
+## AutoGenerate I18N 
+### New Run Script Phase에 아래 코드를 작성합니다
 ```
 # Type a script or drag a script file from your workspace to insert its path.
+export ROOT_DIRECTORY="${SRCROOT}/Packages" # Package가 존재하는 Root폴더
+export TARGETS="PhotoScene NoteScene" # 적용할 대상 Package 
 
-ENABLE_SCRIPT="false" # 로컬라이징 작업이 있는 경우만 sync하기를 권장합니다  
-
-if $ENABLE_SCRIPT == "true"; then
-    SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
-    cd "$SCRIPT_DIR"
-    
-    # <-p> 패키지 파일의 Root 폴더 위치를 설정하세요
-    # <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. PhotoScene NoteScene)
-    xcrun -sdk macosx swift run Localizing generate \
-    -p "${SRCROOT}/Packages" \
-    -t "PhotoScene" 
-
-    rm -rf "$SCRIPT_DIR/.build" # 미 삭제시 바이너리에 빌드파일이 포함됩니다 삭제하지마세요
-else
-    echo "I18N Script Disabled"
-fi
+SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
+${SCRIPT_DIR}/Run
 
 ```
 
+## Generate Maualy I18N
+### Script 파일을 별도로 생성하고 직접 실행할 수 있습니다
+
+New Run Script Phase에 아래 코드를 작성합니다
+```
+SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/MKLocalize"
+"${SCRIPT_DIR}/ManualScript"
+```
+
+최초 적용 시 GenerateI18N 파일이 생성되며 Xcode로 열립니다.
+생성된 파일 내 옵션을 정확히 작성하세요
+```
+# 패키지 파일의 Root 폴더 위치를 설정하세요
+ENV_PACKAGE_ROOT="Packages"
+# 로컬라이징 대상을 지정하세요 (Main 프로젝트 제외)
+ENV_PACKAGE_TARGETS=(PhotoScene NoteScene)
+```
