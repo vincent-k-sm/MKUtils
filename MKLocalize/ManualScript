@@ -1,51 +1,70 @@
 #!/bin/bash
 
-# SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
-#
-# cd "${SRCROOT}"
-# touch Run
-# #SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-#
-# # <-p> 패키지 파일의 Root 폴더 위치를 설정하세요
-# # <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. PhotoScene NoteScene)
-#
-# cd "$SCRIPT_DIR"
-# xcrun -sdk macosx swift run Localizing generate \
-# -p "${SCRIPT_DIR}/Sources" \
-# -t "Example"
-
-# -p "${SRCROOT}/Packages" \
-# -t ""
-
-#rm -rf "$SCRIPT_DIR/.build"
-
-#!/bin/bash
-# For Script Test
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "${SCRIPT_DIR}"
-SRCROOT="${SCRIPT_DIR}"
-
-#cd "${SRCROOT}"
-#SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
-
-if [ -f RunI18N ];
-then
-echo "RunI18N File Is Already Exist\nRemove it initialize"
-else
+# $1: ENV_PACKAGE_ROOT
+# $2: ENV_PACKAGE_TARGETS
+# $3: Open file
+function GenerateScript () {
 cat > RunI18N << EOF
 #!/bin/bash
+
+# 패키지 파일의 Root 폴더 위치를 설정하세요
+$1
+# 로컬라이징 대상을 지정하세요 (Main 프로젝트 제외)
+$2
+
 SCRIPT_DIR="${SCRIPT_DIR}"
 cd "${SCRIPT_DIR}"
 
 # <-p> 패키지 파일의 Root 폴더 위치를 설정하세요
 # <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. PhotoScene NoteScene)
 xcrun -sdk macosx swift run Localizing generate \\
--p "${SRCROOT}/Packages" \\
--t ""
+-p "${SRCROOT}/\${ENV_PACKAGE_ROOT}" \\
+-t "\${ENV_PACKAGE_TARGETS}"
 
 rm -rf "$SCRIPT_DIR/.build" # 미 삭제시 바이너리에 빌드파일이 포함됩니다 삭제하지마세요
 
 EOF
 chmod +x RunI18N # Make the script executable
-open -a Xcode RunI18N
+if [ $3 = true ] ; then
+    echo "3초 후에 수정 파일이 열립니다"
+    sleep 3
+    open -a Xcode RunI18N
+fi
+}
+
+
+#!/bin/bash
+# DEBUG
+#SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#cd "${SCRIPT_DIR}"
+#SRCROOT="${SCRIPT_DIR}"
+
+# RELEASE
+cd "${SRCROOT}"
+SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
+
+if [ -f RunI18N ];
+then
+    arg1=""
+    arg2=""
+#    i=1
+    while read line || [ -n "$line" ] ; do
+#      echo "Line $i: $line"
+#      ((i+=1))
+        if [[ $line == ENV_PACKAGE_ROOT* ]] ;
+        then
+#            echo "$line"
+            arg1="${line}"
+        elif [[ $line == ENV_PACKAGE_TARGETS* ]] ;
+        then
+#            echo "$line"
+            arg2="${line}"
+        fi
+    done < RunI18N
+    GenerateScript "$arg1" "$arg2" false
+    
+else
+arg1="ENV_PACKAGE_ROOT=\"Packages\""
+arg2="ENV_PACKAGE_TARGETS=\"A B C\""
+GenerateScript "$arg1" "$arg2" true
 fi

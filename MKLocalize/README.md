@@ -61,4 +61,3 @@ RunI18N 파일이 생성되며 Xcode로 열립니다.
 # <-p> 패키지 파일의 Root 폴더 위치를 설정하세요
 # <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. PhotoScene NoteScene)
 ```
-
