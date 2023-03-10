@@ -25,7 +25,7 @@ MKLocalize.shared.setCurrentLanguage("en")
 ## (Auto) New Run Script Phase에 아래 코드를 작성합니다
 ```
 # Type a script or drag a script file from your workspace to insert its path.
-    
+
     export ROOT_DIRECTORY="${SRCROOT}/Package" # Package가 존재하는 Root폴더
     export TARGETS="PhotoScene NoteScene" # 적용할 대상 Package 
     

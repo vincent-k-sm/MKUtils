@@ -17,15 +17,16 @@ struct SwiftScript: ParsableCommand {
     
     /// The sub-command to actually generate code.
     struct GenerateCode: ParsableCommand {
-//        @Argument(help: "Target Packages Root Path")
-//        var root: String
-        
+
         
         @Option(name: .customShort("p"), help: "Target Packages Root Path.")
         var root: String
         
-        @Option(name: .customShort("t"), help: "Target Packages")
+        @Argument(help: "Target Packages Root Path")
         var targets: [String] = []
+        
+//        @Option(name: .customShort("t"), help: "Target Packages")
+//        var targets: [String] = []
         
         
         static var configuration = CommandConfiguration(

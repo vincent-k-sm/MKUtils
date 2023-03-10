@@ -19,7 +19,7 @@ cd "${SCRIPT_DIR}"
 # <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. PhotoScene NoteScene)
 xcrun -sdk macosx swift run Localizing generate \\
 -p "${SRCROOT}/\${ENV_PACKAGE_ROOT}" \\
--t "\${ENV_PACKAGE_TARGETS}"
+\${ENV_PACKAGE_TARGETS[@]}
 
 rm -rf "$SCRIPT_DIR/.build" # 미 삭제시 바이너리에 빌드파일이 포함됩니다 삭제하지마세요
 
@@ -65,6 +65,6 @@ then
     
 else
 arg1="ENV_PACKAGE_ROOT=\"Packages\""
-arg2="ENV_PACKAGE_TARGETS=\"A B C\""
+arg2="ENV_PACKAGE_TARGETS=(A B C)"
 GenerateScript "$arg1" "$arg2" true
 fi
