@@ -4,7 +4,7 @@
 # $2: ENV_PACKAGE_TARGETS
 # $3: Open file
 function GenerateScript () {
-cat > RunI18N << EOF
+cat > GenerateI18N << EOF
 #!/bin/bash
 
 # 패키지 파일의 Root 폴더 위치를 설정하세요
@@ -24,11 +24,11 @@ xcrun -sdk macosx swift run Localizing generate \\
 rm -rf "$SCRIPT_DIR/.build" # 미 삭제시 바이너리에 빌드파일이 포함됩니다 삭제하지마세요
 
 EOF
-chmod +x RunI18N # Make the script executable
+chmod +x GenerateI18N # Make the script executable
 if [ $3 = true ] ; then
     echo "3초 후에 수정 파일이 열립니다"
     sleep 3
-    open -a Xcode RunI18N
+    open -a Xcode GenerateI18N
 fi
 }
 
@@ -43,7 +43,7 @@ fi
 cd "${SRCROOT}"
 SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
 
-if [ -f RunI18N ];
+if [ -f GenerateI18N ];
 then
     arg1=""
     arg2=""
@@ -60,7 +60,7 @@ then
 #            echo "$line"
             arg2="${line}"
         fi
-    done < RunI18N
+    done < GenerateI18N
     GenerateScript "$arg1" "$arg2" false
     
 else
