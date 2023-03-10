@@ -48,8 +48,17 @@ fi
 
 ## (Manual) 수동으로 스크립트를 실행합니다
 ### 매 빌드 시 자동 적용하는 경우 과도한 버퍼가 사용될 수 있습니다
-### New Run Script Phase에 아래 코드를 작성합니다
+
+New Run Script Phase에 아래 코드를 작성합니다
 ```
 SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/MKLocalize"
 "${SCRIPT_DIR}/ManualScript"
 ```
+
+RunI18N 파일이 생성되며 Xcode로 열립니다.
+아래 Argument를 정확히 작성하세요
+```
+# <-p> 패키지 파일의 Root 폴더 위치를 설정하세요
+# <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. PhotoScene NoteScene)
+```
+
