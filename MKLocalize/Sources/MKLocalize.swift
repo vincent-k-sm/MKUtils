@@ -14,16 +14,41 @@ public class MKLocalize {
     public static let shared = MKLocalize()
     public var localizingMode: MKLocalizeState = .system
     
+    private var currentLanguageKey: String? {
+        get {
+            return UserDefaults.standard.object(forKey: Constants.LCLCurrentLanguageKey) as? String
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Constants.LCLCurrentLanguageKey)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
     private init() {
         
     }
     
+    /// Configure Module
+    /// - Parameters:
+    ///   - localizingMode: system // custom
+    ///   - defaultLanguage: when custom localize need default language (it doesn't work after setCurrentLanguage() Called )
     public func configure(
         localizingMode: MKLocalizeState,
-        defaultLanguage: String
+        defaultLanguage: String? = nil
     ) {
         self.localizingMode = localizingMode
-        Constants.LCLDefaultLanguage = defaultLanguage
+        switch self.localizingMode {
+            case .system:
+                self.currentLanguageKey = nil
+                
+            case .custom:
+                break
+        }
+        
+        if let defaultLanguage = defaultLanguage {
+            Constants.LCLDefaultLanguage = defaultLanguage
+        }
+        
     }
     
     public func availableLanguages(_ excludeBase: Bool = false) -> [String] {
@@ -42,9 +67,7 @@ public class MKLocalize {
                 return defaultLanguage()
                 
             case .custom:
-                if let currentLanguage = UserDefaults.standard.object(
-                    forKey: Constants.LCLCurrentLanguageKey
-                ) as? String {
+                if let currentLanguage = self.currentLanguageKey {
                     return currentLanguage
                 }
                 return defaultLanguage()
@@ -72,10 +95,12 @@ public class MKLocalize {
     }
     
     public func setCurrentLanguage(_ language: String) {
-        let selectedLanguage = availableLanguages().contains(language) ? language : defaultLanguage()
-        if selectedLanguage != currentLanguage() {
-            UserDefaults.standard.set(selectedLanguage, forKey: Constants.LCLCurrentLanguageKey)
-            UserDefaults.standard.synchronize()
+        let selectedLanguage = availableLanguages().contains(language)
+        ? language
+        : self.defaultLanguage()
+        
+        if selectedLanguage != self.currentLanguage() {
+            self.currentLanguageKey = selectedLanguage
         }
     }
     
@@ -87,8 +112,6 @@ public class MKLocalize {
         return language
     }
 }
-
-
 
 extension MKLocalize {
     struct Constants {
