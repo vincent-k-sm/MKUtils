@@ -6,13 +6,12 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # swift run generate <p> <t>
 # <-p> 패키지 파일의 Root 폴더 위치를 설정하세요
 # <-t> 스크립트가 동작할 패키지 목록을 배열형태로 설정하세요 (eg. (PhotoScene NoteScene))
-echo "ROOT_DIRECTORY=${ROOT_DIRECTORY}"
+#echo "ROOT_DIRECTORY=${ROOT_DIRECTORY}"
 echo "TARGETS=[${TARGETS[@]}]"
 echo ""
 echo ""
 cd "$SCRIPT_DIR"
 xcrun -sdk macosx swift run Localizing generate \
--p "${ROOT_DIRECTORY}" \
 ${TARGETS[@]}
 
 rm -rf "$SCRIPT_DIR/.build"

@@ -19,10 +19,11 @@ struct SwiftScript: ParsableCommand {
     struct GenerateCode: ParsableCommand {
 
         
-        @Option(name: .customShort("p"), help: "Target Packages Root Path.")
-        var root: String
+//        @Option(name: .customShort("p"), help: "Target Packages Root Path.")
+//        var root: String
         
-        @Argument(help: "Target Packages Root Path")
+//        ../../Localizable
+        @Argument(help: "Localizable Targets Path")
         var targets: [String] = []
         
 //        @Option(name: .customShort("t"), help: "Target Packages")
@@ -34,13 +35,12 @@ struct SwiftScript: ParsableCommand {
             abstract: "Generates swift code from your localized.string based on information set up in the `GenerateCode` command.")
         
         func run() throws {
-//            let packages: [String] = ["LocalizeKit"] + targets
             let packages: [String] = targets
             CodegenLogger.log("Target Packages:\n\(packages)\n")
             
-            let fileStructure = try FileStructure(sourceRootURL: root)
+            let fileStructure = try FileStructure(sourceRootURL: nil)
             for target in packages {
-                fileStructure.configure(targetPackage: target)
+                fileStructure.configure(targetPath: target)
                 CodegenLogger.log("File structure:\n\(fileStructure.debugDescription)\n")
                 CodegenLogger.log("------------------------------------------")
                 CodegenLogger.log("Start localizing for target : \(target)")
@@ -55,28 +55,28 @@ struct SwiftScript: ParsableCommand {
             // Get the root of the target for which you want to generate code.
             // TODO: Replace the placeholder here with the name of of the folder containing your project's code files.
             
-            let targetRootURL = fileStructure.constantKitSourceURL
-                .childFolderURL(folderName: "Localizable")
+            let targetRootURL = fileStructure.rootURL
+//                .childFolderURL(folderName: "Localizable")
             
             try FileManager.default.createFolderIfNeeded(at: targetRootURL)
             
             let stringFileURL = targetRootURL
-                .childFolderURL(folderName: "ko.lproj")
 //            CodegenLogger.log("stringFileURL: \(stringFileURL)")
             
             
             let generator = LocalizingGenerator(binaryFolderURL: targetRootURL)
+            /// ko.lproj Directory Path
             try generator.runI18N(from: stringFileURL)
         
             
             let outputFileURL = try stringFileURL.childFileURL(fileName: "I18N.swift")
 //            CodegenLogger.log("outputFileURL: \(outputFileURL)")
             
-            let destinationFileURL = try fileStructure.constantKitSourceURL
-                .childFolderURL(folderName: "Localizable")
+            let destinationFileURL = try targetRootURL
+                .parentFolderURL()
                 .childFileURL(fileName: "I18N.swift")
             
-//            CodegenLogger.log("destinationFileURL: \(destinationFileURL.absoluteString)")
+            CodegenLogger.log("destinationFileURL: \(destinationFileURL.absoluteString)")
             
             do {
                 if FileManager.default.fileExists(at: destinationFileURL.path) {

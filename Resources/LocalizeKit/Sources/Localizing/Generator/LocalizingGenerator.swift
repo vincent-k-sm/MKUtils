@@ -18,12 +18,13 @@ public class LocalizingGenerator {
     }
     
     @discardableResult
+    /// folder: ko.lproj Dir path
     public func runI18N(from folder: URL) throws -> String {
         // Add the binary folder URL to $PATH so the script can find pre-compiled `node`
         
         let command = "export PATH=$PATH:'\(self.binaryFolderURL.path)'"
         // Log out the version for debugging purposes
-         + " && '\(self.scriptPath)' --version"
+//         + " && '\(self.scriptPath)' --version"
         
         // Set the final command to log out the passed-in arguments for debugging purposes
 //        + " && set -x"
