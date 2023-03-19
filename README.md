@@ -127,4 +127,4 @@ Follow guide doc.
 # MKLocalize
 ## Configuration
 Follow guide doc.
-> [README](/MKLocalize/README.md)
+> [README](/LocalizeKit/README.md)

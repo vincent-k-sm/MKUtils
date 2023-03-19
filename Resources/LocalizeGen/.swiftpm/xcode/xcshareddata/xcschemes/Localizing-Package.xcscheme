@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Localizing_LocalizeKit"
-               BuildableName = "Localizing_LocalizeKit"
-               BlueprintName = "Localizing_LocalizeKit"
+               BlueprintIdentifier = "Localizing_LocalizeGen"
+               BuildableName = "Localizing_LocalizeGen"
+               BlueprintName = "Localizing_LocalizeGen"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocalizeKit"
-               BuildableName = "LocalizeKit"
-               BlueprintName = "LocalizeKit"
+               BlueprintIdentifier = "LocalizeGen"
+               BuildableName = "LocalizeGen"
+               BlueprintName = "LocalizeGen"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>

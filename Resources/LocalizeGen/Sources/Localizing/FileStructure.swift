@@ -30,7 +30,7 @@ class FileStructure {
         // Set up the folder where you want the typescript CLI to download.
         self.lprojURL = self.rootURL
 //          .childFolderURL(folderName: "Sources")
-//          .childFolderURL(folderName: "LocalizeKit")
+//          .childFolderURL(folderName: "LocalizeGen")
     }
     
 //    func configure(

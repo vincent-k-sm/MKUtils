@@ -1,18 +1,18 @@
 //
-//  MKLocalize.swift
+//  LocalizeKit.swift
 //
         
 
 import Foundation
 
-public enum MKLocalizeState {
+public enum LocalizeKitState {
     case system
     case custom
 }
 
-public class MKLocalize {
-    public static let shared = MKLocalize()
-    public var localizingMode: MKLocalizeState = .system
+public class LocalizeKit {
+    public static let shared = LocalizeKit()
+    public var localizingMode: LocalizeKitState = .system
     
     private var currentLanguageKey: String? {
         get {
@@ -33,7 +33,7 @@ public class MKLocalize {
     ///   - localizingMode: system // custom
     ///   - defaultLanguage: when custom localize need default language (it doesn't work after setCurrentLanguage() Called )
     public func configure(
-        localizingMode: MKLocalizeState,
+        localizingMode: LocalizeKitState,
         defaultLanguage: String? = nil
     ) {
         self.localizingMode = localizingMode
@@ -113,7 +113,7 @@ public class MKLocalize {
     }
 }
 
-extension MKLocalize {
+extension LocalizeKit {
     struct Constants {
         static let LCLCurrentLanguageKey = "LCLCurrentLanguageKey"
         static var LCLDefaultLanguage = "ko"
