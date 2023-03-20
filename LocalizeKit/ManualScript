@@ -21,13 +21,14 @@ cat > GenerateI18N << EOF
 
 SCRIPT_DIR="\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT_DIR="${SRCROOT}"
-ENV_PACKAGE_TARGETS=""
+ENV_PACKAGE_TARGETS=()
+while read line || [ -n "\$line" ] ; do
 if [[ "$line" =~ ^#.*$ ]]; then
     echo ""
 elif [ "$line" == "" ]; then
     echo ""
 else
-    ENV_PACKAGE_TARGETS="\${ENV_PACKAGE_TARGETS} \${PROJECT_ROOT_DIR}/\${line}"
+    ENV_PACKAGE_TARGETS+=("\${PROJECT_ROOT_DIR}/\${line}")
 fi
 done < \$SCRIPT_DIR/.i18n
 
