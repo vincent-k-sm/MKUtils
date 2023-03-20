@@ -56,7 +56,10 @@ SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/DKTUtils/LocalizeKit"
 최초 적용 시 GenerateI18N 파일이 생성되며 .i18n이 숨김파일로 생성됩니다
 생성된 파일에 ko.lproj폴더 경로를 한 줄씩 입력하세요
 tip. finder 에서 해당 파일을 끌어다 놓으면 full path가 자동으로 입력됩니다
+이때 프로젝트 Root Dir 이 전 영역은 제거합니다
+
 ```
 eg.
 /Users/../Desktop/.../ProjectName/Packages/NoteScene/Sources/NoteScene/Localizable/ko.lproj
+-> Packages/NoteScene/Sources/NoteScene/Localizable/ko.lproj
 ```
