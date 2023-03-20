@@ -3,9 +3,8 @@ import Foundation
 import ArgumentParser
 
 // An outer structure to hold all commands and sub-commands handled by this script.
-@main
+
 struct SwiftScript: ParsableCommand {
-    
 
     static var configuration = CommandConfiguration(
         abstract: """
@@ -100,4 +99,4 @@ struct SwiftScript: ParsableCommand {
 }
 
 // This will set up the command and parse the arguments when this executable is run.
-//SwiftScript.main()
+SwiftScript.main();
