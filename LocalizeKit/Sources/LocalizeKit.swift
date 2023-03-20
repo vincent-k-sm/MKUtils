@@ -91,7 +91,8 @@ public class LocalizeKit {
     }
     
     public func resetCurrentLanguageToDefault() {
-        self.setCurrentLanguage(self.defaultLanguage())
+        self.currentLanguageKey = nil
+//        self.setCurrentLanguage(self.defaultLanguage())
     }
     
     public func setCurrentLanguage(_ language: String) {
