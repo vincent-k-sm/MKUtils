@@ -53,7 +53,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "generate -p &quot;/Users/vincent/Desktop/PersonalProject/MKUtils/Resources/LocalizeKit/PackagesExample/&quot; -t &quot;Test&quot; &quot;asdasd&quot;"
+            argument = "generate -p &quot;/Users/vincent/Desktop/PersonalProject/MKUtils/Resources/LocalizeGen/PackagesExample/&quot; -t &quot;Test&quot; &quot;asdasd&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
