@@ -23,12 +23,13 @@ SCRIPT_DIR="\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT_DIR="${SRCROOT}"
 ENV_PACKAGE_TARGETS=()
 while read line || [ -n "\$line" ] ; do
-if [[ "$line" =~ ^#.*$ ]]; then
-    echo ""
-elif [ "$line" == "" ]; then
-    echo ""
+if [[ "\$line" =~ ^#.*$ ]]; then
+    echo "_"
+elif [ "\$line" == "" ]; then
+    echo "_"
 else
     ENV_PACKAGE_TARGETS+=("\${PROJECT_ROOT_DIR}/\${line}")
+    echo "append: \${PROJECT_ROOT_DIR}/\${line}"
 fi
 done < \$SCRIPT_DIR/.i18n
 
@@ -36,7 +37,7 @@ SCRIPT_DIR="${SCRIPT_DIR}"
 cd "${SCRIPT_DIR}"
 
 xcrun -sdk macosx swift run Localizing generate \\
-\${ENV_PACKAGE_TARGETS[@]}
+"\${ENV_PACKAGE_TARGETS[@]}"
 
 rm -rf "$SCRIPT_DIR/.build" # 미 삭제시 바이너리에 빌드파일이 포함됩니다 삭제하지마세요
 
