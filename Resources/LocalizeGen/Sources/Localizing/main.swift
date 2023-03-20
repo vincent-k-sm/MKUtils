@@ -99,4 +99,4 @@ struct SwiftScript: ParsableCommand {
 }
 
 // This will set up the command and parse the arguments when this executable is run.
-SwiftScript.main()
+SwiftScript.main();

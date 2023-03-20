@@ -5,23 +5,31 @@ cat > .i18n << EOF
 #!/bin/bash
 
 # .i18n 파일 내 경로를 한 줄씩 지정하세요
+# 프로젝트 Root 하위부터 설정합니다
 ## eg. ../../Sources/Test/Localizable/ko.lproj
+
 EOF
 sleep 3
 open -a Xcode .i18n
 }
+##################################################################
+
 
 function GenerateScript () {
 cat > GenerateI18N << EOF
 #!/bin/bash
 
 SCRIPT_DIR="\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
-ENV_PACKAGE_TARGETS=""
+PROJECT_ROOT_DIR="${SRCROOT}"
+ENV_PACKAGE_TARGETS=()
 while read line || [ -n "\$line" ] ; do
 if [[ "\$line" =~ ^#.*$ ]]; then
-    echo ""
+    echo "_"
+elif [ "\$line" == "" ]; then
+    echo "_"
 else
-    ENV_PACKAGE_TARGETS="\${ENV_PACKAGE_TARGETS} \$line"
+    ENV_PACKAGE_TARGETS+=("\${PROJECT_ROOT_DIR}/\${line}")
+    echo "append: \${PROJECT_ROOT_DIR}/\${line}"
 fi
 done < \$SCRIPT_DIR/.i18n
 
@@ -29,7 +37,7 @@ SCRIPT_DIR="${SCRIPT_DIR}"
 cd "${SCRIPT_DIR}"
 
 xcrun -sdk macosx swift run Localizing generate \\
-\${ENV_PACKAGE_TARGETS[@]}
+"\${ENV_PACKAGE_TARGETS[@]}"
 
 rm -rf "$SCRIPT_DIR/.build" # 미 삭제시 바이너리에 빌드파일이 포함됩니다 삭제하지마세요
 
@@ -47,13 +55,21 @@ chmod +x GenerateI18N # Make the script executable
 # RELEASE
 cd "${SRCROOT}"
 
-SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeKit"
+SCRIPT_DIR="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/MKUtils/Resources/LocalizeGen"
 
 GenerateScript
 
 ENV_FILE="$SRCROOT/.i18n"
 if [ -e "$ENV_FILE" ]; then
-    echo "GenerateENV Exist"
+    echo ".i18n file exist"
+    while IFS= read -r line
+    do
+    if [[ "$line" =~ ^#.*$ ]]; then
+    echo ""
+    else
+    echo "${line}"
+    fi
+    done <"$ENV_FILE"
 else
     GenerateENV
 fi
