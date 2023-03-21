@@ -124,7 +124,7 @@ Code(
 Follow guide doc.
 > [README](/Resources/SwiftLint/README.md)
 
-# MKLocalize
+# LocalizeKit
 ## Configuration
 Follow guide doc.
 > [README](/LocalizeKit/README.md)
