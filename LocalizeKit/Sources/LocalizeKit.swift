@@ -95,9 +95,9 @@ public class LocalizeKit {
 //        self.setCurrentLanguage(self.defaultLanguage())
     }
     
-    public func setCurrentLanguage(_ language: String) {
-        let selectedLanguage = availableLanguages().contains(language)
-        ? language
+    public func setCurrentLanguage(_ language: String, forced: Bool = false) {
+        let selectedLanguage = forced ? language
+        : self.availableLanguages().contains(language) ? language
         : self.defaultLanguage()
         
         if selectedLanguage != self.currentLanguage() {
