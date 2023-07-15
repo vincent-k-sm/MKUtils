@@ -17,10 +17,10 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-//         .package(
-//            url: "https://github.com/vincent-k-sm/MKFoundation",
-//            .upToNextMajor(from: "1.0.3")
-//         ),
+        .package(
+            url: "https://github.com/Alamofire/Alamofire",
+            .upToNextMajor(from: Version(5, 0, 0))
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -28,15 +28,9 @@ let package = Package(
         .target(
             name: "MKUtils",
             dependencies: [
-//                .product(name: "MKFoundation", package: "MKFoundation")
+
             ],
-            exclude: [
-                "../../Resources"
-            ]
-        ),
-        .testTarget(
-            name: "MKUtilsTests",
-            dependencies: ["MKUtils"]
+            path: "MKUtils/Sources"
         ),
         .target(
             name: "LocalizeKit",
@@ -44,6 +38,14 @@ let package = Package(
                 "MKUtils"
             ],
             path: "LocalizeKit/Sources"
+        ),
+        .target(
+            name: "NetworkCore",
+            dependencies: [
+                "MKUtils",
+                .product(name: "Alamofire", package: "Alamofire")
+            ],
+            path: "NetworkCore/Sources"
         ),
     ]
 )
