@@ -14,6 +14,9 @@ let package = Package(
         .library(
             name: "LocalizeKit",
             targets: ["LocalizeKit"]),
+        .library(
+            name: "NetworkCore",
+            targets: ["NetworkCore"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
