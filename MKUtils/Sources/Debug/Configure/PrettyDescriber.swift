@@ -1,19 +1,18 @@
 //
 //  PrettyDescriber.swift
-//  
+//
 //
 //  Created by vincent on 2023/02/06.
 //
 
 import Foundation
-
+// swiftlint: disable no_direct_standard_out_logs
 protocol PrettyFormatter {
     func collectionString(elements: [String]) -> String
     func dictionaryString(keysAndValues: [(String, String)]) -> String
     func tupleString(elements: [(String?, String)]) -> String
     func objectString(typeName: String, fields: [(String, String)]) -> String
 }
-
 
 struct PrettyDescriber {
     var formatter: PrettyFormatter
@@ -60,7 +59,8 @@ struct PrettyDescriber {
                         // Specifing "." as the first charactor of the label of tuple is prohibited.
                         if let nonNilLabel = $0.label, nonNilLabel.first != "." {
                             label = nonNilLabel
-                        } else { label = nil }
+                        }
+                        else { label = nil }
                         
                         return (label: label, value: _string($0.value))
                     }
@@ -81,7 +81,10 @@ struct PrettyDescriber {
                     
                     return res
                     
-                case .struct, .class: fallthrough
+                case .struct, .class:
+                    //                    fallthrough
+                    break
+                    
                 @unknown default:
                     break
             }
@@ -170,8 +173,14 @@ struct PrettyDescriber {
                 ? "true"
                 : "false"
                 
-            case is Int: fallthrough
-            case is Float: fallthrough
+            case is Int:
+                //                fallthrough
+                return "\(target)"
+                
+            case is Float:
+                //                fallthrough
+                return "\(target)"
+                
             case is Double:
                 return "\(target)"
                 
@@ -268,11 +277,16 @@ struct PrettyDescriber {
         Fatal error in Debug.print.
         ---------------------------------------------------------
         \(error.localizedDescription)
-        Please report issue from below:
-        https://github.com/vincent-k-sm/MKUtils
+        Please report issue from below
         ---------------------------------------------------------
         
         """
         print(message)
+    }
+}
+
+extension PrettyDescriber {
+    static func line(indent: Int) -> PrettyDescriber {
+        return PrettyDescriber(formatter: MultilineFormatter(indentSize: indent))
     }
 }

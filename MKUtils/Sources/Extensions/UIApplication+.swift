@@ -25,7 +25,7 @@ public extension UIApplication {
             try FileManager.default.removeItem(atPath: NSHomeDirectory()+"/Library/SplashBoard")
         }
         catch {
-            Debug.print("Failed to delete launch screen cache: \(error)")
+//            Debug.print("Failed to delete launch screen cache: \(error)")
         }
     }
 

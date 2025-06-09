@@ -9,6 +9,8 @@ import Foundation
 
 class MultilineFormatter: PrettyFormatter {
     
+    deinit { }
+    
     private let indentSize: Int
     
     init(indentSize: Int) {
