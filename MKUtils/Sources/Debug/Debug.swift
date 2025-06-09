@@ -5,7 +5,7 @@
 import Foundation
 import os.log
 
-class Debug {
+public class Debug {
     
     private init() {
         
@@ -16,12 +16,7 @@ class Debug {
     }
     
     private static let shared = Debug()
-    static var logEnable: Bool = true
-    
-    class func sourceFileName(filePath: String) -> String {
-        let components = filePath.components(separatedBy: "/")
-        return components.isEmpty ? "" : components.last!
-    }
+    public static var logEnable: Bool = true
     
     class func sdkprint(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function, logEvent: LoggerLevels = LoggerLevels.v) {
         
@@ -90,23 +85,23 @@ class Debug {
         }
     }
     
-    class func v(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public class func v(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         sdkprint(logType: logType, object, filename: filename, line: line, column: column, funcName: funcName, logEvent: .d)
     }
     
-    class func d(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public class func d(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         sdkprint(logType: logType, object, filename: filename, line: line, column: column, funcName: funcName, logEvent: .d)
     }
     
-    class func i(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public class func i(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         sdkprint(logType: logType, object, filename: filename, line: line, column: column, funcName: funcName, logEvent: .i)
     }
     
-    class func w(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public class func w(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         sdkprint(logType: logType, object, filename: filename, line: line, column: column, funcName: funcName, logEvent: .w)
     }
     
-    class func e(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public class func e(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         sdkprint(logType: logType, object, filename: filename, line: line, column: column, funcName: funcName, logEvent: .e)
     }
 }
