@@ -2,7 +2,7 @@
 //  PrettyDescriber.swift
 //
 //
-//  Created by vincent on 2023/02/06.
+//  Created by mk on 2023/02/06.
 //
 
 import Foundation
@@ -277,7 +277,6 @@ struct PrettyDescriber {
         Fatal error in Debug.print.
         ---------------------------------------------------------
         \(error.localizedDescription)
-        Please report issue from below
         ---------------------------------------------------------
         
         """

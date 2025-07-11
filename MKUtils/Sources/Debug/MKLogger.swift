@@ -5,7 +5,7 @@
 import Foundation
 import os.log
 
-public class Debug {
+public class MKLogger {
     
     private init() {
         
@@ -15,12 +15,26 @@ public class Debug {
         
     }
     
-    private static let shared = Debug()
-    public static var logEnable: Bool = true
+    private static let shared = MKLogger()
+    public static var logEnable: Bool = false
+    // MARK: 과도한 로그 출력을 조정합니다
+    private static let enableLogTypes: [LoggerType] = LoggerType.allCases
+//        .filter({ $0 != .event })
+//        .filter({ $0 != .auth })
+    
+    class func sourceFileName(filePath: String) -> String {
+        let components = filePath.components(separatedBy: "/")
+        return components.isEmpty ? "" : components.last!
+    }
     
     class func sdkprint(logType: LoggerType? = nil, _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function, logEvent: LoggerLevels = LoggerLevels.v) {
+        if let logType = logType {
+            if !Self.enableLogTypes.contains(logType) {
+                return
+            }
+        }
         
-        if Debug.logEnable {
+        if MKLogger.logEnable {
             let date = Date()
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm:ss.SSSS"
@@ -127,7 +141,7 @@ extension Data {
     }
 }
 
-extension Debug {
+extension MKLogger {
     private static func _printDebug(
         _ targets: [Any],
         separator: String,

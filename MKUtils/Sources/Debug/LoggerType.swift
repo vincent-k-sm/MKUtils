@@ -5,43 +5,11 @@
 import Foundation
 import os.log
 
-public enum LoggerType {
-    public init?(rawValue: String) {
-        switch rawValue {
-            case "info":
-                self = .info
-                
-            case "debug":
-                self = .debug
-                
-            default:
-                self = .custom(rawValue)
-        }
-    }
-    
-    public var rawValue: String {
-        
-        switch self {
-            case .debug:
-                return "debug"
-                
-            case .info:
-                return "info"
-                
-            case .custom(let string):
-                return string
-        }
-    }
-    
-    public typealias RawValue = String
-
+public enum LoggerType: String, CaseIterable {
     case debug
-    case info
-    case custom(String)
     
     var log: OSLog {
         return OSLog(subsystem: OSLog.subsystem, category: self.rawValue)
-        
     }
     
     var prefix: String {
@@ -50,5 +18,5 @@ public enum LoggerType {
 }
 
 extension OSLog {
-    static let subsystem = Bundle.main.bundleIdentifier!
+    static let subsystem = "LOG"
 }
