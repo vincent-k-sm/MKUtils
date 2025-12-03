@@ -5,7 +5,7 @@
 import Foundation
 import os.log
 
-public class MKLogger {
+public class Log {
     
     private init() {
         
@@ -15,7 +15,7 @@ public class MKLogger {
         
     }
     
-    private static let shared = MKLogger()
+    private static let shared = Log()
     public static var logEnable: Bool = false
     // MARK: 과도한 로그 출력을 조정합니다
     private static let enableLogTypes: [LoggerType] = LoggerType.allCases
@@ -34,7 +34,7 @@ public class MKLogger {
             }
         }
         
-        if MKLogger.logEnable {
+        if Log.logEnable {
             let date = Date()
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm:ss.SSSS"
@@ -141,7 +141,7 @@ extension Data {
     }
 }
 
-extension MKLogger {
+extension Log {
     private static func _printDebug(
         _ targets: [Any],
         separator: String,

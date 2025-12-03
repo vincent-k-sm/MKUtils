@@ -1,9 +1,3 @@
-//
-//  PrettyDescriber.swift
-//
-//
-//  Created by mk on 2023/02/06.
-//
 
 import Foundation
 // swiftlint: disable no_direct_standard_out_logs
@@ -15,12 +9,21 @@ protocol PrettyFormatter {
 }
 
 struct PrettyDescriber {
+
     var formatter: PrettyFormatter
     var timeZone: TimeZone = .current
-    
+    private static let recursiveLock = NSRecursiveLock()
+
     func string<T: Any>(_ target: T, debug: Bool) -> String {
+
+        PrettyDescriber.recursiveLock.lock()
+
+        defer { PrettyDescriber.recursiveLock.unlock() }
+
         func _string(_ target: Any) -> String {
+
             string(target, debug: debug)
+
         }
         
         let mirror = Mirror(reflecting: target)
@@ -216,6 +219,14 @@ struct PrettyDescriber {
         let mirror = Mirror(reflecting: target)
         let typeName = String(describing: mirror.subjectType)
         
+        if let error = target as? Error {
+            if debug {
+                return "\(typeName).\(error.localizedDescription)"
+            } else {
+                return error.localizedDescription
+            }
+        }
+
         if mirror.children.isEmpty {
             if debug {
                 return "\(typeName).\(target)"
@@ -225,11 +236,11 @@ struct PrettyDescriber {
             }
         }
         else {
-            guard let index = "\(target)".firstIndex(of: "(") else {
+            guard let index = String(describing: target).firstIndex(of: "(") else {
                 throw PrettyDescriberError.unknownError(target: target)
             }
             
-            let valueName = "\(target)"[..<index]
+            let valueName = String(describing: target)[..<index]
             
             let prefix: String
             
